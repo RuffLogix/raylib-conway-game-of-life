@@ -8,4 +8,6 @@ const (
 	TILE_SIZE int32 = 20
 
 	TARGET_FPS int32 = 60
+
+	PAUSE_MESSAGE string = "Press Space to continue | Right arrow to go next"
 )

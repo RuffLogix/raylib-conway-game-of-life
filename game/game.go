@@ -23,8 +23,10 @@ func (g *Game) Update() {
 		g.isPause = !g.isPause
 	}
 
-	if !g.isPause {
-		if g.frames == 5 {
+	isNextPressed := g.isPause && rl.IsKeyPressed(rl.KeyRight)
+
+	if !g.isPause || isNextPressed {
+		if g.frames == 5 || isNextPressed {
 			g.board.Update()
 			g.frames = 0
 		}
@@ -80,10 +82,10 @@ func (g *Game) Draw() {
 		}
 	}
 
-	// if g.isPause {
-	// rl.DrawRectangle(0, 0, config.WINDOW_WIDTH, config.WINDOW_HEIGHT, rl.NewColor(0, 0, 0, 200))
-	// rl.DrawText("Game Paused", config.WINDOW_WIDTH/2-rl.MeasureText("Game Paused", 40)/2, config.WINDOW_HEIGHT/2-40, 40, rl.Black)
-	// }
+	if g.isPause {
+		rl.DrawRectangle(config.WINDOW_WIDTH/2-365, config.WINDOW_HEIGHT/2+250, rl.MeasureText(config.PAUSE_MESSAGE, 14), 35, rl.NewColor(0, 0, 0, 100))
+		rl.DrawText(config.PAUSE_MESSAGE, config.WINDOW_WIDTH/2-360, config.WINDOW_HEIGHT/2+260, 14, rl.White)
+	}
 
 	rl.EndDrawing()
 }
