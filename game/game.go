@@ -80,9 +80,10 @@ func (g *Game) Draw() {
 		}
 	}
 
-	if g.isPause {
-		rl.DrawRectangle(0, 0, config.WINDOW_WIDTH, config.WINDOW_HEIGHT, rl.NewColor(0, 0, 0, 127))
-	}
+	// if g.isPause {
+	// rl.DrawRectangle(0, 0, config.WINDOW_WIDTH, config.WINDOW_HEIGHT, rl.NewColor(0, 0, 0, 200))
+	// rl.DrawText("Game Paused", config.WINDOW_WIDTH/2-rl.MeasureText("Game Paused", 40)/2, config.WINDOW_HEIGHT/2-40, 40, rl.Black)
+	// }
 
 	rl.EndDrawing()
 }
