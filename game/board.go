@@ -11,15 +11,20 @@ var xDirection = []int8{-1, 0, 1}
 var yDirection = []int8{-1, 0, 1}
 
 type Board struct {
+	cols  int32
+	rows  int32
 	cells [][]int8
 
 	population int32
 }
 
 func (b *Board) Init() {
-	cells := make([][]int8, config.WINDOW_WIDTH/config.TILE_SIZE)
+	b.rows = config.WINDOW_WIDTH / config.TILE_SIZE
+	b.cols = config.WINDOW_HEIGHT / config.TILE_SIZE
+
+	cells := make([][]int8, b.rows)
 	for i := range cells {
-		cells[i] = make([]int8, config.WINDOW_HEIGHT/config.TILE_SIZE)
+		cells[i] = make([]int8, b.cols)
 	}
 
 	b.cells = cells
@@ -28,14 +33,14 @@ func (b *Board) Init() {
 func (b *Board) Update() {
 	b.population = 0
 
-	tempCells := make([][]int8, config.WINDOW_WIDTH/config.TILE_SIZE)
+	tempCells := make([][]int8, b.rows)
 	for i := range tempCells {
-		tempCells[i] = make([]int8, config.WINDOW_HEIGHT/config.TILE_SIZE)
+		tempCells[i] = make([]int8, b.cols)
 		copy(tempCells[i], b.cells[i])
 	}
 
-	for i := range config.WINDOW_WIDTH / config.TILE_SIZE {
-		for j := range config.WINDOW_HEIGHT / config.TILE_SIZE {
+	for i := range b.rows {
+		for j := range b.cols {
 			b.cells[i][j] = b.isAlive(i, j, &tempCells)
 			b.population += int32(b.cells[i][j])
 		}
@@ -44,8 +49,8 @@ func (b *Board) Update() {
 
 func (b *Board) isCellValid(i int32, j int32) bool {
 	if i < 0 || j < 0 ||
-		i >= config.WINDOW_WIDTH/config.TILE_SIZE ||
-		j >= config.WINDOW_HEIGHT/config.TILE_SIZE {
+		i >= b.rows ||
+		j >= b.cols {
 		return false
 	}
 
@@ -54,8 +59,8 @@ func (b *Board) isCellValid(i int32, j int32) bool {
 
 func (b *Board) countNeighbors(i int32, j int32, cells *[][]int8) int8 {
 	neighbors := int8(0)
-	for xIndex := range 3 {
-		for yIndex := range 3 {
+	for xIndex := range xDirection {
+		for yIndex := range yDirection {
 			if b.isCellValid(
 				i+int32(xDirection[xIndex]),
 				j+int32(yDirection[yIndex]),
@@ -82,18 +87,12 @@ func (b *Board) isAlive(i int32, j int32, cells *[][]int8) int8 {
 }
 
 func (b *Board) Draw() {
-	for i := range config.WINDOW_WIDTH / config.TILE_SIZE {
-		for j := range config.WINDOW_HEIGHT / config.TILE_SIZE {
-			isMouseHover := rl.CheckCollisionPointRec(
-				rl.GetMousePosition(),
-				rl.NewRectangle(
-					float32(i*config.TILE_SIZE),
-					float32(j*config.TILE_SIZE),
-					float32(config.TILE_SIZE),
-					float32(config.TILE_SIZE),
-				),
-			)
-			if isMouseHover {
+	for i := range b.rows {
+		for j := range b.cols {
+			mouseCol := rl.GetMouseX() / config.TILE_SIZE
+			mouseRow := rl.GetMouseY() / config.TILE_SIZE
+
+			if i == mouseCol && j == mouseRow {
 				rl.DrawRectangle(
 					i*config.TILE_SIZE,
 					j*config.TILE_SIZE,
