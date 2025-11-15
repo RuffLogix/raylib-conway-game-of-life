@@ -9,5 +9,6 @@ const (
 
 	TARGET_FPS int32 = 60
 
-	PAUSE_MESSAGE string = "Press Space to continue | Right arrow to go next"
+	CONTROL_KEYS_MESSAGE = "Press space bar for pause/continue\nPress r for next"
+	PAUSE_MESSAGE        = "Game pauses"
 )

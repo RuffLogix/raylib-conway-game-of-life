@@ -23,7 +23,7 @@ func (g *Game) Update() {
 		g.isPause = !g.isPause
 	}
 
-	isNextPressed := g.isPause && rl.IsKeyPressed(rl.KeyRight)
+	isNextPressed := g.isPause && rl.IsKeyPressed(rl.KeyR)
 
 	if !g.isPause || isNextPressed {
 		if g.frames == 5 || isNextPressed {
@@ -38,54 +38,25 @@ func (g *Game) Draw() {
 	rl.BeginDrawing()
 	rl.ClearBackground(rl.White)
 
-	for i := range config.WINDOW_WIDTH / config.TILE_SIZE {
-		for j := range config.WINDOW_HEIGHT / config.TILE_SIZE {
-			isMouseHover := rl.CheckCollisionPointRec(
-				rl.GetMousePosition(),
-				rl.NewRectangle(
-					float32(i*config.TILE_SIZE),
-					float32(j*config.TILE_SIZE),
-					float32(config.TILE_SIZE),
-					float32(config.TILE_SIZE),
-				),
-			)
-			if isMouseHover {
-				rl.DrawRectangle(
-					i*config.TILE_SIZE,
-					j*config.TILE_SIZE,
-					config.TILE_SIZE,
-					config.TILE_SIZE,
-					rl.Red,
-				)
-
-				if rl.IsMouseButtonPressed(rl.MouseButtonLeft) {
-					g.board.cells[i][j] = 1 - g.board.cells[i][j]
-				}
-			} else {
-				if g.board.cells[i][j] == 1 {
-					rl.DrawRectangle(
-						i*config.TILE_SIZE,
-						j*config.TILE_SIZE,
-						config.TILE_SIZE,
-						config.TILE_SIZE,
-						rl.Blue,
-					)
-				}
-			}
-			rl.DrawRectangleLines(
-				i*config.TILE_SIZE,
-				j*config.TILE_SIZE,
-				config.TILE_SIZE,
-				config.TILE_SIZE,
-				rl.LightGray,
-			)
-		}
-	}
+	g.board.Draw()
 
 	if g.isPause {
-		rl.DrawRectangle(config.WINDOW_WIDTH/2-365, config.WINDOW_HEIGHT/2+250, rl.MeasureText(config.PAUSE_MESSAGE, 14), 35, rl.NewColor(0, 0, 0, 100))
-		rl.DrawText(config.PAUSE_MESSAGE, config.WINDOW_WIDTH/2-360, config.WINDOW_HEIGHT/2+260, 14, rl.White)
+		rl.DrawText(
+			config.PAUSE_MESSAGE,
+			config.WINDOW_WIDTH-rl.MeasureText(config.PAUSE_MESSAGE, 20)-25,
+			25,
+			20,
+			rl.Red,
+		)
 	}
+
+	rl.DrawRectangle(
+		25,
+		config.WINDOW_HEIGHT-60,
+		rl.MeasureText(config.CONTROL_KEYS_MESSAGE, 14)+10, 50,
+		rl.NewColor(0, 0, 0, 100),
+	)
+	rl.DrawText(config.CONTROL_KEYS_MESSAGE, 30, config.WINDOW_HEIGHT-55, 14, rl.White)
 
 	rl.EndDrawing()
 }
