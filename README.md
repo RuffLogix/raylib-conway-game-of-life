@@ -1,5 +1,7 @@
 # Conway's Game of Life in Go using Raylib
 
+[Article Link](https://medium.com/@rufflogix/building-conways-game-of-life-in-go-with-raylib-aaf3bc6a6095)
+
 This project is an implementation of Conway's Game of Life using the Go programming language and the Raylib graphics library. The Game of Life is a kind of cellular automaton created by John Horton Conway in 1970. Each state of the game depends on the initial state, which  can be thought of as a seed that generates the entire game. In each step, every cell becomes either alive or dead according to the following simple rules.
 
 ![Rules](images/rules.png)
