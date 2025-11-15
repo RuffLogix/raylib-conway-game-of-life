@@ -48,9 +48,7 @@ func (b *Board) Update() {
 }
 
 func (b *Board) isCellValid(i int32, j int32) bool {
-	if i < 0 || j < 0 ||
-		i >= b.rows ||
-		j >= b.cols {
+	if i < 0 || j < 0 || i >= b.rows || j >= b.cols {
 		return false
 	}
 
