@@ -11,6 +11,10 @@ This project is an implementation of Conway's Game of Life using the Go programm
 3. Any live cell with more than three live neighbours dies, as if by over-population
 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
+## Demo
+
+![Demo](images/demo.png)
+
 ## Proejct Structure
 
 The project is structured as follows:
@@ -29,10 +33,6 @@ The project is structured as follows:
 - `game/board.go`: Contains the logic for the game board, including cell state management
 - `game/game.go`: Contains the main game logic, including updating the board and rendering.
 - `main.go`: The entry point of the application, where the game loop is implemented.
-
-## Demo
-
-![Demo](images/demo.png)
 
 ## How to run the project
 
